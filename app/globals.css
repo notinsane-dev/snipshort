@@ -1,8 +1,51 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
+/* ─────────────────────────────────────────────────────────────
+   SnipShort — Parchment & Brown design tokens
+   Light theme: warm beige backgrounds, dark brown readable text,
+   rich brown primary accent for buttons and highlights.
+───────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ece1c9;
+  --foreground: #2e2015;
+
+  --surface-1: #f2e6cd;
+  --surface-2: #e3d2ae;
+  --surface-3: #d3bd8e;
+
+  --border: rgba(46, 32, 21, 0.10);
+  --border-hover: rgba(46, 32, 21, 0.18);
+  --border-focus: rgba(107, 66, 38, 0.35);
+
+  /* Signature rich-brown primary accent — used for CTAs, the brand
+     mark, focus states, and key icon highlights. */
+  --brand: #6b4226;
+  --brand-foreground: #f7eeda;
+
+  --text-primary: #2e2015;
+  --text-secondary: #6b5847;
+  --text-muted: #a3906f;
+
+  --radius: 0.875rem;
+
+  /* ── shadcn tokens ─────────────────────────── */
+  --card: #f2e6cd;
+  --card-foreground: #2e2015;
+  --popover: #f2e6cd;
+  --popover-foreground: #2e2015;
+  --primary: #6b4226;
+  --primary-foreground: #f7eeda;
+  --secondary: #e3d2ae;
+  --secondary-foreground: #2e2015;
+  --muted: #e8dcc0;
+  --muted-foreground: #6b5847;
+  --accent: #e3d2ae;
+  --accent-foreground: #2e2015;
+  --destructive: #b8462f;
+  --destructive-foreground: #f7eeda;
+  --input: rgba(46, 32, 21, 0.06);
+  --ring: rgba(107, 66, 38, 0.35);
 }
 
 @theme inline {
@@ -10,17 +53,123 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Recolor Tailwind's core black/white palette entries so every
+     bg-black / text-white / border-white/[x] utility across the
+     codebase automatically renders in the beige/brown brand palette
+     — no need to touch each component's className strings.
+     bg-black / text-black → beige page background.
+     bg-white / text-white → dark brown readable text & subtle surfaces. */
+  --color-black: #ece1c9;
+  --color-white: #2e2015;
+
+  /* Brand accent utilities: bg-brand, text-brand, border-brand, ring-brand… */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─────────────────────────────────────────────────────────────
+   Base reset
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  border-color: var(--border);
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  background: #ece1c9;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ece1c9;
+  color: #2e2015;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Selection + scrollbar
+───────────────────────────────────────────────────────────── */
+::selection { background: #6b4226; color: #f7eeda; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #ece1c9; }
+::-webkit-scrollbar-thumb { background: #c9b48c; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #b89c6e; }
+
+/* ─────────────────────────────────────────────────────────────
+   Form element overrides (fight browser defaults)
+───────────────────────────────────────────────────────────── */
+input, textarea, select {
+  background-color: transparent;
+  color: #2e2015;
+  -webkit-text-fill-color: #2e2015;
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(46, 32, 21, 0.35);
+  -webkit-text-fill-color: rgba(46, 32, 21, 0.35);
+}
+
+select option {
+  background-color: #f2e6cd;
+  color: #2e2015;
+}
+
+/* Remove autofill blue/yellow tint */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #f2e6cd inset !important;
+  -webkit-text-fill-color: #2e2015 !important;
+  transition: background-color 9999s ease-in-out;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Keyframes
+───────────────────────────────────────────────────────────── */
+
+/* Shake for wrong password */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-5px); }
+  30%       { transform: translateX(5px); }
+  45%       { transform: translateX(-4px); }
+  60%       { transform: translateX(4px); }
+  75%       { transform: translateX(-2px); }
+  90%       { transform: translateX(2px); }
+}
+.animate-shake { animation: shake 0.42s ease-in-out; }
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% - var(--gap))); }
+}
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-100% - var(--gap))); }
+}
+.animate-marquee          { animation: marquee var(--duration) linear infinite; }
+.animate-marquee-vertical { animation: marquee-vertical var(--duration) linear infinite; }
+
+/* Float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
+}
+.animate-float { animation: float 5s ease-in-out infinite; }
+
+/* Cursor blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.animate-cursor-blink { animation: cursor-blink 1s step-end infinite; }
