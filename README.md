@@ -184,13 +184,4 @@ Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) befo
 
 [MIT](./LICENSE) — free to use, modify, and distribute with attribution.
 
----
-
-## Roadmap
-
-- [ ] Cloudflare Turnstile on the shorten form
-- [ ] Detailed click events (referrer, UA, geo)
-- [ ] Custom domains per link
-- [ ] Link editing from the dashboard
-
 Want to pick something up? Check [open issues](https://github.com/notinsane-dev/snipshort/issues) or propose a new one.
