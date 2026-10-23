@@ -13,7 +13,10 @@ export function CookieConsent() {
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (!stored) setVisible(true);
+      if (!stored) {
+        const timer = setTimeout(() => setVisible(true), 0);
+        return () => clearTimeout(timer);
+      }
     } catch {
       // localStorage unavailable (e.g. privacy mode) — skip the banner.
     }

@@ -35,6 +35,7 @@ const ShortenSchema = z.object({
   password: z
     .string()
     .min(4, "Password must be at least 4 characters.")
+    .max(72, "Password cannot exceed 72 characters.")
     .optional(),
 });
 
@@ -272,6 +273,12 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
+      if (isPostgresError(error) && error.code === PG_UNIQUE_VIOLATION) {
+        return NextResponse.json(
+          { error: `The slug "${slug}" is already taken.` },
+          { status: 409 }
+        );
+      }
       console.error("[shorten] insert error:", error.message);
       return NextResponse.json(
         { error: "Internal server error." },

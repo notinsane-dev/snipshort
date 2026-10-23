@@ -20,7 +20,7 @@ export function Typewriter({
 }: TypewriterProps) {
   const [displayed, setDisplayed] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
-  const [phase, setPhase] = useState<"typing" | "pausing" | "deleting">("typing");
+  const [phase, setPhase] = useState<"typing" | "deleting">("typing");
 
   useEffect(() => {
     const word = words[wordIndex % words.length];
@@ -33,13 +33,9 @@ export function Typewriter({
         );
         return () => clearTimeout(t);
       } else {
-        const t = setTimeout(() => setPhase("pausing"), pauseMs);
+        const t = setTimeout(() => setPhase("deleting"), pauseMs);
         return () => clearTimeout(t);
       }
-    }
-
-    if (phase === "pausing") {
-      setPhase("deleting");
     }
 
     if (phase === "deleting") {
@@ -50,8 +46,11 @@ export function Typewriter({
         );
         return () => clearTimeout(t);
       } else {
-        setWordIndex((i) => i + 1);
-        setPhase("typing");
+        const t = setTimeout(() => {
+          setWordIndex((i) => i + 1);
+          setPhase("typing");
+        }, typingSpeed);
+        return () => clearTimeout(t);
       }
     }
   }, [displayed, phase, wordIndex, words, typingSpeed, deletingSpeed, pauseMs]);

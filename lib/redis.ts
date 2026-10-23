@@ -14,7 +14,6 @@ import Redis from "ioredis";
 
 declare global {
   // Allow the global to persist across hot reloads in development.
-  // eslint-disable-next-line no-var
   var _redis: Redis | undefined;
 }
 
