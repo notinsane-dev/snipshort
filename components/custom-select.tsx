@@ -35,7 +35,10 @@ export function CustomSelect({
 
   const selected = options.find((o) => o.value === value);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   function updatePosition() {
     if (!triggerRef.current) return;
@@ -101,6 +104,7 @@ export function CustomSelect({
               width: menuStyle.width,
             }}
             className="z-[200] rounded-xl border border-white/[0.14] bg-[#f2e6cd] p-1.5 shadow-[0_12px_40px_rgba(46,32,21,0.18)]"
+            id={id ? `${id}-listbox` : "custom-select-listbox"}
             role="listbox"
             aria-label="Select option"
           >
@@ -141,6 +145,7 @@ export function CustomSelect({
         type="button"
         role="combobox"
         aria-expanded={open}
+        aria-controls={id ? `${id}-listbox` : "custom-select-listbox"}
         aria-haspopup="listbox"
         onClick={() => setOpen((v) => !v)}
         className={cn(

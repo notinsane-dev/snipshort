@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import {
@@ -467,19 +468,19 @@ function SiteNav({ logoSrc }: { logoSrc: string }) {
       <nav className="flex items-center gap-1.5">
         {isSignedIn ? (
           <>
-            <a href="/dashboard" className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-white/45 hover:text-white hover:bg-white/[0.05] transition-all">
+            <Link href="/dashboard" className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-white/45 hover:text-white hover:bg-white/[0.05] transition-all">
               Dashboard
-            </a>
+            </Link>
             <UserButton appearance={{ elements: { avatarBox: "w-7 h-7" } }} />
           </>
         ) : (
           <>
-            <a href="/sign-in" className="inline-flex items-center px-3 py-1.5 text-sm text-white/40 hover:text-white hover:bg-white/[0.05] rounded-lg transition-all">
+            <Link href="/sign-in" className="inline-flex items-center px-3 py-1.5 text-sm text-white/40 hover:text-white hover:bg-white/[0.05] rounded-lg transition-all">
               Sign in
-            </a>
-            <a href="/sign-up" className="inline-flex items-center gap-1.5 rounded-lg bg-brand text-brand-foreground px-4 py-1.5 text-sm font-semibold hover:bg-brand/90 transition-all active:scale-95">
+            </Link>
+            <Link href="/sign-up" className="inline-flex items-center gap-1.5 rounded-lg bg-brand text-brand-foreground px-4 py-1.5 text-sm font-semibold hover:bg-brand/90 transition-all active:scale-95">
               Sign up
-            </a>
+            </Link>
           </>
         )}
       </nav>

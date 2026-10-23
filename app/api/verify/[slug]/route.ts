@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createServiceClient } from "@/lib/supabase/server";
 import { verifyRatelimit } from "@/lib/ratelimit";
 import { getIp } from "@/lib/getIp";
+import { trackClick } from "@/lib/trackClick";
 
 // ---------------------------------------------------------------------------
 // Request schema
@@ -154,6 +155,9 @@ export async function POST(
   // ── 4. Return destination URL ─────────────────────────────────────────────
   // The client performs the redirect via window.location.href so we can
   // keep this endpoint stateless (no session cookie needed yet).
+  // Fire-and-forget click count increment upon successful password verification
+  void trackClick(slug);
+
   void expiresAt; // acknowledged, not used in response
   return NextResponse.json({ destinationUrl }, { status: 200 });
 }

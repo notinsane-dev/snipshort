@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -133,7 +134,7 @@ export default function VerifyPage() {
         </form>
 
         <p className="mt-5 text-center text-xs text-white/15">
-          <a href="/" className="hover:text-white/40 transition-colors">← Back to SnipShort</a>
+          <Link href="/" className="hover:text-white/40 transition-colors">← Back to SnipShort</Link>
         </p>
       </div>
     </div>

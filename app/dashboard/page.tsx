@@ -3,7 +3,7 @@ import { UserButton } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Plus, BarChart3 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { createUserClient } from "@/lib/supabase/server";
 import type { Link as LinkRow } from "@/types";
 import { DashboardLinkCard } from "./DashboardLinkCard";

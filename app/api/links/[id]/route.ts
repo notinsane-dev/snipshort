@@ -96,7 +96,7 @@ export async function PATCH(
     );
   }
 
-  if (!body.title && !body.destinationUrl && body.expiresAt === undefined) {
+  if (body.title === undefined && body.destinationUrl === undefined && body.expiresAt === undefined) {
     return NextResponse.json(
       { error: "Provide at least one field to update." },
       { status: 400 }
